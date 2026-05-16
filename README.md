@@ -13,11 +13,29 @@ The template is built for TRMNL OG's 800x480 black/white screen. It uses Liquid 
 - Model usage breakdown
 - Recent work breakdown
 
+## Quickstart
+
+```bash
+git clone https://github.com/pilipilisbot/trmnl-codex-usage-dashboard.git
+cd trmnl-codex-usage-dashboard
+cp .env.example .env
+$EDITOR .env
+make validate
+make push-sample
+```
+
+In TRMNL, create a Private Plugin with the Webhook strategy, paste `templates/full.liquid` into the Full markup view, then put the generated webhook URL in `.env` as `TRMNL_CODEX_WEBHOOK_URL`.
+
+Full setup: `docs/INSTALL.md`.
+
 ## Files
 
 - `templates/full.liquid` - paste this into TRMNL Private Plugin -> Markup -> Full.
 - `payloads/sample-webhook.json` - sample webhook payload.
 - `payloads/schema.json` - JSON Schema for the `merge_variables` payload.
+- `scripts/push-webhook.sh` - sends any compatible payload to the TRMNL webhook.
+- `Makefile` - `make validate` and `make push-sample` helpers.
+- `.env.example` - local webhook configuration template.
 
 ## TRMNL Setup
 
