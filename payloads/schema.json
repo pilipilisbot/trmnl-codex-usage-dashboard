@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TRMNL Codex Usage Dashboard Webhook Payload",
+  "type": "object",
+  "required": ["merge_variables"],
+  "additionalProperties": true,
+  "properties": {
+    "merge_variables": {
+      "type": "object",
+      "required": [
+        "updated_at",
+        "five_hour_used_pct",
+        "five_hour_used",
+        "five_hour_limit",
+        "five_hour_reset",
+        "weekly_used_pct",
+        "weekly_used",
+        "weekly_limit",
+        "weekly_reset",
+        "spark_used_pct",
+        "spark_used",
+        "spark_limit",
+        "spark_reset",
+        "daily_usage",
+        "models",
+        "recent"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "updated_at": { "type": "string" },
+        "five_hour_used_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "five_hour_used": { "type": "string" },
+        "five_hour_limit": { "type": "string" },
+        "five_hour_reset": { "type": "string" },
+        "weekly_used_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "weekly_used": { "type": "string" },
+        "weekly_limit": { "type": "string" },
+        "weekly_reset": { "type": "string" },
+        "spark_used_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "spark_used": { "type": "string" },
+        "spark_limit": { "type": "string" },
+        "spark_reset": { "type": "string" },
+        "daily_usage": {
+          "type": "array",
+          "maxItems": 7,
+          "items": { "$ref": "#/$defs/percentage_item" }
+        },
+        "models": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["name", "pct", "value"],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "type": "string" },
+              "pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "recent": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": true,
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "percentage_item": {
+      "type": "object",
+      "required": ["label", "pct"],
+      "additionalProperties": true,
+      "properties": {
+        "label": { "type": "string" },
+        "pct": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    }
+  }
+}

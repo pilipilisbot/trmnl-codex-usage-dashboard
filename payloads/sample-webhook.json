@@ -1,0 +1,38 @@
+{
+  "merge_variables": {
+    "updated_at": "16 May 23:20",
+    "five_hour_used_pct": 63,
+    "five_hour_used": "3h 09m",
+    "five_hour_limit": "5h",
+    "five_hour_reset": "01:00",
+    "weekly_used_pct": 42,
+    "weekly_used": "18h",
+    "weekly_limit": "42h",
+    "weekly_reset": "Mon 00:00",
+    "spark_used_pct": 25,
+    "spark_used": "125",
+    "spark_limit": "500",
+    "spark_reset": "Mon 00:00",
+    "daily_usage": [
+      { "label": "Mon", "pct": 28 },
+      { "label": "Tue", "pct": 54 },
+      { "label": "Wed", "pct": 37 },
+      { "label": "Thu", "pct": 81 },
+      { "label": "Fri", "pct": 65 },
+      { "label": "Sat", "pct": 43 },
+      { "label": "Sun", "pct": 12 }
+    ],
+    "models": [
+      { "name": "gpt-5.5", "pct": 71, "value": "14h" },
+      { "name": "gpt-5.4", "pct": 18, "value": "3h 40m" },
+      { "name": "codex-spark", "pct": 7, "value": "1h 25m" },
+      { "name": "other", "pct": 4, "value": "45m" }
+    ],
+    "recent": [
+      { "label": "GitHub bridge", "value": "1h 22m" },
+      { "label": "TRMNL plugin", "value": "48m" },
+      { "label": "OpenClaw ops", "value": "31m" },
+      { "label": "Docs/review", "value": "19m" }
+    ]
+  }
+}
