@@ -28,6 +28,8 @@ In TRMNL, create a Private Plugin with the Webhook strategy, paste `templates/fu
 
 Full setup: `docs/INSTALL.md`.
 
+Publishing paths: `docs/PUBLISHING.md`.
+
 ## Files
 
 - `templates/full.liquid` - paste this into TRMNL Private Plugin -> Markup -> Full.
@@ -36,6 +38,7 @@ Full setup: `docs/INSTALL.md`.
 - `scripts/push-webhook.sh` - sends any compatible payload to the TRMNL webhook.
 - `Makefile` - `make validate` and `make push-sample` helpers.
 - `.env.example` - local webhook configuration template.
+- `docs/PUBLISHING.md` - Private Plugin vs Recipe vs Third Party Plugin trade-offs.
 
 ## TRMNL Setup
 
