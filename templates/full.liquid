@@ -1,30 +1,28 @@
-<link rel="stylesheet" href="https://trmnl.com/css/latest/plugins.css">
 <style>
-  .codex-dashboard { font-family: system-ui, sans-serif; }
-  .codex-grid { display: grid; grid-template-columns: 256px 1fr; gap: 18px; height: 406px; }
-  .quota-stack { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .quota-box, .panel { border: 2px solid #000; border-radius: 6px; padding: 10px; background: #fff; overflow: hidden; }
-  .quota-label, .panel-title, .row-label { font-size: 18px; font-weight: 700; line-height: 1.05; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .quota-value { margin-top: 4px; font-size: 28px; font-weight: 800; line-height: 1; }
-  .quota-meta, .muted { margin-top: 3px; font-size: 13px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .meter { margin-top: 5px; height: 9px; border: 2px solid #000; background: repeating-linear-gradient(45deg, #fff, #fff 3px, #ddd 3px, #ddd 6px); }
-  .meter-fill, .thin-meter-fill { height: 100%; background: #000; }
-  .main-stack { display: grid; grid-template-rows: 194px 1fr; gap: 14px; }
-  .daily-bars { display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 10px; height: 128px; margin-top: 12px; border-bottom: 2px solid #000; }
-  .day { display: flex; flex-direction: column; justify-content: flex-end; height: 128px; }
-  .day-bar { min-height: 6px; border: 2px solid #000; background: #000; }
-  .day-label { margin-top: 5px; text-align: center; font-size: 13px; font-weight: 700; }
-  .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .rows { display: grid; gap: 8px; margin-top: 12px; }
-  .row { display: grid; grid-template-columns: 104px 1fr 54px; gap: 8px; align-items: center; }
-  .recent-row { display: grid; grid-template-columns: 1fr 62px; gap: 8px; align-items: baseline; }
-  .thin-meter { height: 9px; border: 1px solid #000; background: #fff; }
-  .row-value { text-align: right; font-size: 14px; font-weight: 700; }
-  .empty { margin-top: 16px; font-size: 16px; }
+  .codex-dashboard { font-family: system-ui, sans-serif; width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
+  .codex-dashboard .codex-grid { display: grid; grid-template-columns: minmax(0, 30%) minmax(0, 1fr); gap: 12px; min-height: 0; flex: 1; }
+  .codex-dashboard .quota-stack { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .codex-dashboard .quota-box, .codex-dashboard .panel { min-width: 0; min-height: 0; border: 2px solid #000; border-radius: 6px; padding: 10px; background: #fff; overflow: hidden; }
+  .codex-dashboard .quota-label, .codex-dashboard .panel-title, .codex-dashboard .row-label { font-size: 18px; font-weight: 700; line-height: 1.05; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .codex-dashboard .quota-value { margin-top: 4px; font-size: 28px; font-weight: 800; line-height: 1; }
+  .codex-dashboard .quota-meta, .codex-dashboard .muted { margin-top: 3px; font-size: 13px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .codex-dashboard .meter { margin-top: 5px; height: 9px; border: 2px solid #000; background: repeating-linear-gradient(45deg, #fff, #fff 3px, #ddd 3px, #ddd 6px); }
+  .codex-dashboard .meter-fill, .codex-dashboard .thin-meter-fill { height: 100%; background: #000; }
+  .codex-dashboard .main-stack { display: grid; grid-template-rows: minmax(0, 48%) minmax(0, 1fr); gap: 10px; min-height: 0; }
+  .codex-dashboard .daily-bars { display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 10px; height: 70%; margin-top: 8px; border-bottom: 2px solid #000; }
+  .codex-dashboard .day { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+  .codex-dashboard .day-bar { min-height: 6px; border: 2px solid #000; background: #000; }
+  .codex-dashboard .day-label { margin-top: 5px; text-align: center; font-size: 13px; font-weight: 700; }
+  .codex-dashboard .bottom-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; min-height: 0; }
+  .codex-dashboard .rows { display: grid; gap: 8px; margin-top: 12px; }
+  .codex-dashboard .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20px, 1fr) 44px; gap: 8px; align-items: center; }
+  .codex-dashboard .recent-row { display: grid; grid-template-columns: 1fr 62px; gap: 8px; align-items: baseline; }
+  .codex-dashboard .thin-meter { height: 9px; border: 1px solid #000; background: #fff; }
+  .codex-dashboard .row-value { text-align: right; font-size: 14px; font-weight: 700; }
+  .codex-dashboard .empty { margin-top: 16px; font-size: 16px; }
+  .codex-dashboard .codex-footer { font-size: 11px; line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
-<div class="screen codex-dashboard">
-  <div class="view">
-    <div class="layout layout--col">
+<div class="codex-dashboard">
       <div class="codex-grid">
         <div class="quota-stack">
           {% for quota in quotas limit:3 %}
@@ -68,10 +66,5 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="title_bar">
-      <span class="title">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }}</span>
-      <span class="instance">Updated {{ updated_at | default: "—" | escape }}</span>
-    </div>
-  </div>
+  <div class="codex-footer">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>

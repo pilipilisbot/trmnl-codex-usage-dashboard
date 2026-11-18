@@ -1,16 +1,15 @@
-<link rel="stylesheet" href="https://trmnl.com/css/latest/plugins.css">
 <style>
-  .codex-half-horizontal { font-family: system-ui, sans-serif; }
-  .codex-half-horizontal .quota-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; height: 174px; }
+  .codex-half-horizontal { font-family: system-ui, sans-serif; width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
+  .codex-half-horizontal .quota-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; min-height: 0; flex: 1; }
   .codex-half-horizontal .quota-card { border: 2px solid #000; border-radius: 6px; padding: 10px; overflow: hidden; }
   .codex-half-horizontal .label { font-size: 19px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .codex-half-horizontal .percent { font-size: 36px; line-height: 1.1; font-weight: 800; }
   .codex-half-horizontal .detail { font-size: 15px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .codex-half-horizontal .meter { height: 12px; border: 2px solid #000; margin-top: 8px; }
   .codex-half-horizontal .fill { height: 100%; background: #000; }
+  .codex-half-horizontal .codex-footer { font-size: 11px; line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
-<div class="screen codex-half-horizontal">
-  <div class="view"><div class="layout layout--col">
+<div class="codex-half-horizontal">
     <div class="quota-row">
       {% for quota in quotas limit:3 %}
         <div class="quota-card">
@@ -24,6 +23,5 @@
         <div class="quota-card"><div class="label">Waiting for data</div><div class="detail">Send your first payload.</div></div>
       {% endfor %}
     </div>
-  </div></div>
-  <div class="title_bar"><span class="title">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }}</span><span class="instance">Updated {{ updated_at | default: "—" | escape }}</span></div>
+  <div class="codex-footer">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>
