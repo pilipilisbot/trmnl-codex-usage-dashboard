@@ -17,6 +17,7 @@
         <div class="percent value lg:value--xlarge">{{ quota.used_pct }}%</div>
         <div class="detail label lg:label--large">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
         <div class="meter"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
+        <div class="detail label lg:label--large">Reset {{ quota.reset | escape }}</div>
       </div>
       {% else %}
         <div class="quota-card"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail label lg:label--large">Send your first payload.</div></div>
