@@ -31,13 +31,13 @@
           {% for quota in quotas limit:3 %}
             <div class="quota-box">
               <div class="quota-label title title--small lg:title--large">{{ quota.label | escape }}</div>
-              <div class="quota-value value value--small lg:value--xlarge">{{ quota.used_pct }}%</div>
-              <div class="quota-meta label lg:label--large">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+              <div class="quota-value value value--small lg:value--xlarge lg:portrait:value--xxlarge">{{ quota.used_pct }}%</div>
+              <div class="quota-meta label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
               <div class="meter"><div class="meter-fill" style="width: {{ quota.used_pct }}%"></div></div>
-              <div class="muted label lg:label--large">Reset {{ quota.reset | escape }}</div>
+              <div class="muted label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
             </div>
           {% else %}
-            <div class="quota-box"><div class="quota-label title title--small lg:title--large">Waiting for data</div><div class="muted label lg:label--large">Send your first usage payload.</div></div>
+            <div class="quota-box"><div class="quota-label title title--small lg:title--large">Waiting for data</div><div class="muted label lg:label--large lg:portrait:label--xlarge">Send your first usage payload.</div></div>
           {% endfor %}
         </div>
         <div class="main-stack">
