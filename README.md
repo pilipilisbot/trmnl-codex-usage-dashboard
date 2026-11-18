@@ -1,34 +1,28 @@
 # Codex Usage for TRMNL
 
-A reusable TRMNL Recipe candidate for displaying Codex usage on e-ink devices. Each installation has its own webhook, account label and data. The recipe does **not** collect OpenAI credentials or infer usage; the user runs an exporter of their choice and sends the documented payload.
+A TRMNL Recipe and a **working local Codex collector**. Each installation has its own webhook URL and can point at a different `CODEX_HOME` (Codex login). No OpenAI credential goes to TRMNL.
 
 ## What it shows
 
-Up to three named quotas, seven daily usage bars, four model rows and four recent-work rows. Empty sections render safely. The layout targets TRMNL's full 800×480 view.
+Real Codex quota percentages and reset times from the official `codex app-server` `account/rateLimits/read` API. The local `~/.codex/sessions` logs supply seven days of relative token activity and model mix when available. The recent-activity panel shows token counts by day: project names and prompts are never sent to TRMNL. The local bars are relative activity, **not** quota or billing figures.
 
-## Install and publish
+## Get started
 
-- [Install a private instance or Recipe](docs/INSTALL.md)
-- [Payload contract and exporter responsibilities](docs/PAYLOAD.md)
-- [Marketplace submission readiness](docs/PUBLISHING.md)
-
-The source needed in TRMNL is `templates/full.liquid` plus `templates/form_fields.yml`. `payloads/sample-webhook.json` is synthetic demo data; it is not tied to an account.
-
-## Multiple accounts
-
-Install the Recipe once per account. TRMNL creates a distinct webhook URL for each instance. Keep those URLs in the ignored `local/instances.json` file and send separately:
+1. Install and sign in to the [Codex CLI](https://github.com/openai/codex) on the machine that will run the collector. Confirm `codex --version` works.
+2. Create or install a TRMNL Recipe instance and copy its *webhook URL*.
+3. Copy the example config, set its webhook URL, and run the collector:
 
 ```bash
 mkdir -p local
-cp payloads/instances.example.json local/instances.json
-cp payloads/sample-webhook.json local/work.json
-cp payloads/sample-webhook.json local/personal.json
-$EDITOR local/instances.json
-python3 scripts/publish.py --instance work --dry-run
-python3 scripts/publish.py --all
+cp payloads/collector.example.json local/collector.json
+$EDITOR local/collector.json
+python3 scripts/collect.py --instance work --dry-run
+python3 scripts/collect.py --instance work
 ```
 
-Replace both example webhook URLs with the URLs shown by the corresponding TRMNL installations, and replace each sample payload with real data from that account. No cross-account aggregation occurs.
+See [installation and scheduling](docs/INSTALL.md). Run it every 15 minutes for automatic updates. To monitor another account, add an instance with its own webhook and separate `codex_home`; sign that home in with Codex CLI. One account's data never gets mixed with another's.
+
+The Recipe is **still a draft**; do not assume it is in the marketplace. The sample payload is synthetic. The original manual JSON sender remains available as `scripts/publish.py` for testing or custom exporters.
 
 ## Development
 

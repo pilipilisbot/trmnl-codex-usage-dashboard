@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="https://trmnl.com/css/latest/plugins.css">
+<style>
+  .codex-quadrant { font-family: system-ui, sans-serif; }
+  .codex-quadrant .quota-card { border: 2px solid #000; border-radius: 6px; padding: 12px; height: 170px; overflow: hidden; }
+  .codex-quadrant .label { font-size: 20px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .codex-quadrant .percent { font-size: 42px; line-height: 1.1; font-weight: 800; }
+  .codex-quadrant .detail { font-size: 15px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .codex-quadrant .meter { height: 12px; border: 2px solid #000; margin-top: 8px; }
+  .codex-quadrant .fill { height: 100%; background: #000; }
+</style>
+<div class="screen codex-quadrant">
+  <div class="view"><div class="layout layout--col">
+    <div class="quota-card">
+      {% for quota in quotas limit:1 %}
+        <div class="label">{{ quota.label | escape }}</div>
+        <div class="percent">{{ quota.used_pct }}%</div>
+        <div class="detail">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+        <div class="meter"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
+      {% else %}
+        <div class="label">Waiting for data</div><div class="detail">Send your first payload.</div>
+      {% endfor %}
+    </div>
+  </div></div>
+  <div class="title_bar"><span class="title">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }}</span></div>
+</div>

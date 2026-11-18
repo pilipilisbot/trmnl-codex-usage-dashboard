@@ -5,9 +5,17 @@
   placeholder: Work account
   maxlength: 32
   optional: true
+- keyname: webhook_url
+  field_type: copyable_webhook_url
+  name: Webhook URL
+  description: Paste this installation's URL into the included local collector.
+  help_text: Copy this URL into local/collector.json after saving the installation.
 - keyname: about
   field_type: author_bio
   name: About this recipe
   category: analytics,programming
-  description: Display Codex usage supplied by your own exporter. Each installation has its own webhook URL and data. No OpenAI credentials are shared with this recipe's author.
+  description: >-
+    Display real Codex quotas with the included local collector. Each installation has its own webhook URL and data.
+    Setup guide: <a href="https://github.com/pilipilisbot/trmnl-codex-usage-dashboard">GitHub README</a>.
+    No OpenAI credentials are shared with this recipe's author.
   github_url: https://github.com/pilipilisbot/trmnl-codex-usage-dashboard

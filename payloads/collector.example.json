@@ -1,0 +1,10 @@
+{
+  "instances": {
+    "work": {
+      "codex_home": "~/.codex",
+      "codex_bin": "codex",
+      "account_label": "Work Codex",
+      "webhook_url": "https://trmnl.com/api/custom_plugins/REPLACE_WITH_YOUR_INSTANCE_UUID"
+    }
+  }
+}

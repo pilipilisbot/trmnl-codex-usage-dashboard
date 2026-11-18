@@ -2,12 +2,12 @@
 <style>
   .codex-dashboard { font-family: system-ui, sans-serif; }
   .codex-grid { display: grid; grid-template-columns: 256px 1fr; gap: 18px; height: 406px; }
-  .quota-stack { display: grid; grid-template-rows: repeat(3, 1fr); gap: 10px; }
-  .quota-box, .panel { border: 2px solid #000; border-radius: 6px; padding: 12px; background: #fff; overflow: hidden; }
+  .quota-stack { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .quota-box, .panel { border: 2px solid #000; border-radius: 6px; padding: 10px; background: #fff; overflow: hidden; }
   .quota-label, .panel-title, .row-label { font-size: 18px; font-weight: 700; line-height: 1.05; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .quota-value { margin-top: 8px; font-size: 34px; font-weight: 800; line-height: 1; }
-  .quota-meta, .muted { margin-top: 6px; font-size: 14px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .meter { margin-top: 10px; height: 12px; border: 2px solid #000; background: repeating-linear-gradient(45deg, #fff, #fff 3px, #ddd 3px, #ddd 6px); }
+  .quota-value { margin-top: 4px; font-size: 28px; font-weight: 800; line-height: 1; }
+  .quota-meta, .muted { margin-top: 3px; font-size: 13px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .meter { margin-top: 5px; height: 9px; border: 2px solid #000; background: repeating-linear-gradient(45deg, #fff, #fff 3px, #ddd 3px, #ddd 6px); }
   .meter-fill, .thin-meter-fill { height: 100%; background: #000; }
   .main-stack { display: grid; grid-template-rows: 194px 1fr; gap: 14px; }
   .daily-bars { display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 10px; height: 128px; margin-top: 12px; border-bottom: 2px solid #000; }
@@ -23,7 +23,7 @@
   .empty { margin-top: 16px; font-size: 16px; }
 </style>
 <div class="screen codex-dashboard">
-  <div class="view view--full">
+  <div class="view">
     <div class="layout layout--col">
       <div class="codex-grid">
         <div class="quota-stack">
@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="panel">
-              <div class="panel-title">Recent work</div>
+              <div class="panel-title">Recent activity</div>
               <div class="rows">
                 {% for item in recent limit:4 %}
                   <div class="recent-row"><div class="row-label">{{ item.label | escape }}</div><div class="row-value">{{ item.value | escape }}</div></div>
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="title_bar">
-      <span class="title">{{ display_name | default: account_label | default: "Codex usage" | escape }}</span>
+      <span class="title">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }}</span>
       <span class="instance">Updated {{ updated_at | default: "—" | escape }}</span>
     </div>
   </div>
