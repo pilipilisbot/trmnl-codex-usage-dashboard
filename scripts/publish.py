@@ -11,6 +11,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_BYTES = 5000
+USER_AGENT = "CodexUsageTRMNL/1.0 (+https://github.com/pilipilisbot/trmnl-codex-usage-dashboard)"
 
 
 def read_json(path):
@@ -79,7 +80,7 @@ def publish(name, entry, dry_run):
     if dry_run:
         print(f"{name}: valid ({len(body)} bytes); no request sent")
         return
-    request = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"}, method="POST")
+    request = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", "User-Agent": USER_AGENT}, method="POST")
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
             if response.status != 200:

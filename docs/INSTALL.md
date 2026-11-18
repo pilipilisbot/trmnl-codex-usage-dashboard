@@ -2,7 +2,7 @@
 
 ## 1. TRMNL installation
 
-The Recipe is currently a draft. Until it is available to install, create a TRMNL Private Plugin with the **Webhook** strategy. Paste `templates/full.liquid` into Full markup and `templates/form_fields.yml` into Form Fields, then save. Copy the generated webhook URL for *that installation*. The URL acts like a credential: do not commit or share it.
+The Recipe is not public yet. The owner can test the existing [private plugin](https://trmnl.com/plugin_settings/544833/edit); other testers should create a TRMNL Private Plugin with the **Webhook** strategy. Paste `templates/full.liquid` into Full markup and `templates/form_fields.yml` into Form Fields, then save. Copy the generated webhook URL for *that installation*. The URL acts like a credential: do not commit or share it.
 
 When the Recipe becomes available, install it once for each account. Every installation generates a different webhook URL. You do **not** need to put an OpenAI token or password in TRMNL.
 
@@ -30,7 +30,7 @@ python3 scripts/collect.py --all --dry-run
 python3 scripts/collect.py --all
 ```
 
-Set that entry's `codex_home` to `~/.codex-personal` and its *own* webhook URL. The collector continues other installations if one fails. It rejects non-TRMNL destinations and does not print webhook URLs on errors.
+Set that entry's `codex_home` to `~/.codex-personal` and its *own* webhook URL. The collector continues other installations if one fails. It sets an identifying User-Agent accepted by the TRMNL webhook (plain Python urllib requests can receive HTTP 403). It rejects non-TRMNL destinations and does not print webhook URLs on errors.
 
 ## 3. Automatic refresh
 

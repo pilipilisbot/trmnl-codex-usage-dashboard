@@ -48,6 +48,19 @@ print(json.dumps({'id': 2, 'result': result}), flush=True)
             self.assertNotIn("NEVER_SEND", json.dumps(payload))
             self.assertNotIn(str(home), json.dumps(payload))
 
+    def test_sender_sets_trmnl_accepted_user_agent(self):
+        entry = {"webhook_url": "https://trmnl.com/api/custom_plugins/example"}
+        payload = {"merge_variables": {"account_label": "Work", "updated_at": "18 Nov 12:00", "quotas": [], "daily_usage": [], "models": [], "recent": []}}
+        class Response:
+            status = 200
+            def __enter__(self): return self
+            def __exit__(self, *_): return False
+        def capture(request, timeout):
+            self.assertEqual(request.get_header("User-agent"), collect.USER_AGENT)
+            return Response()
+        with patch.object(collect, "build_payload", return_value=payload), patch.object(collect.urllib.request, "urlopen", side_effect=capture):
+            collect.collect("work", entry, False)
+
     def test_no_quota_does_not_send(self):
         with tempfile.TemporaryDirectory() as temp:
             entry = {"codex_home": temp, "webhook_url": "https://trmnl.com/api/custom_plugins/example"}

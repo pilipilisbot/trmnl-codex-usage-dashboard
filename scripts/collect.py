@@ -12,7 +12,7 @@ from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from publish import read_json, validate_payload, validate_url
+from publish import USER_AGENT, read_json, validate_payload, validate_url
 import urllib.error
 import urllib.request
 
@@ -199,7 +199,7 @@ def collect(name, entry, dry_run):
     if dry_run:
         print(f"{name}: collected {len(payload['merge_variables']['quotas'])} quotas, {len(payload['merge_variables']['models'])} model rows; no TRMNL request sent")
         return
-    request = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"}, method="POST")
+    request = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", "User-Agent": USER_AGENT}, method="POST")
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
             if response.status != 200:

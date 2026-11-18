@@ -22,7 +22,7 @@ python3 scripts/collect.py --instance work
 
 See [installation and scheduling](docs/INSTALL.md). Run it every 15 minutes for automatic updates. To monitor another account, add an instance with its own webhook and separate `codex_home`; sign that home in with Codex CLI. One account's data never gets mixed with another's.
 
-The Recipe is **still a draft**; do not assume it is in the marketplace. The sample payload is synthetic. The original manual JSON sender remains available as `scripts/publish.py` for testing or custom exporters.
+A **private test plugin** is active in the owner's TRMNL account; the Recipe is **not published in the marketplace**. The sample payload is synthetic. The original manual JSON sender remains available as `scripts/publish.py` for testing or custom exporters.
 
 ## Development
 

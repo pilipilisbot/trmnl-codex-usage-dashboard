@@ -41,6 +41,7 @@ class PublishTests(unittest.TestCase):
                     return False
 
             def capture(request, timeout):
+                self.assertEqual(request.get_header("User-agent"), publish.USER_AGENT)
                 urls.append((request.full_url, json.loads(request.data)["merge_variables"]["account_label"]))
                 return Response()
 
