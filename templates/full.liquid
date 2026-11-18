@@ -3,89 +3,71 @@
   .codex-dashboard .codex-grid { display: grid; grid-template-columns: minmax(0, 30%) minmax(0, 1fr); gap: 12px; min-height: 0; flex: 1; }
   .codex-dashboard .quota-stack { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .codex-dashboard .quota-box, .codex-dashboard .panel { min-width: 0; min-height: 0; border: 2px solid #000; border-radius: 6px; padding: 10px; background: #fff; overflow: hidden; }
-  .codex-dashboard .quota-label, .codex-dashboard .panel-title, .codex-dashboard .row-label { font-size: 18px; font-weight: 700; line-height: 1.05; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .codex-dashboard .quota-value { margin-top: 4px; font-size: 28px; font-weight: 800; line-height: 1; }
-  .codex-dashboard .quota-meta, .codex-dashboard .muted { margin-top: 3px; font-size: 13px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .codex-dashboard .quota-label, .codex-dashboard .panel-title, .codex-dashboard .row-label { line-height: 1.05; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .codex-dashboard .quota-value { margin-top: 4px; line-height: 1; }
+  .codex-dashboard .quota-meta, .codex-dashboard .muted { margin-top: 3px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .codex-dashboard .meter { margin-top: 5px; height: 9px; border: 2px solid #000; background: repeating-linear-gradient(45deg, #fff, #fff 3px, #ddd 3px, #ddd 6px); }
   .codex-dashboard .meter-fill, .codex-dashboard .thin-meter-fill { height: 100%; background: #000; }
   .codex-dashboard .main-stack { display: grid; grid-template-rows: minmax(0, 48%) minmax(0, 1fr); gap: 10px; min-height: 0; }
   .codex-dashboard .daily-bars { display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 10px; height: 70%; margin-top: 8px; border-bottom: 2px solid #000; }
   .codex-dashboard .day { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
   .codex-dashboard .day-bar { min-height: 6px; border: 2px solid #000; background: #000; }
-  .codex-dashboard .day-label { margin-top: 5px; text-align: center; font-size: 13px; font-weight: 700; }
+  .codex-dashboard .day-label { margin-top: 5px; text-align: center; }
   .codex-dashboard .bottom-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; min-height: 0; }
   .codex-dashboard .rows { display: grid; gap: 8px; margin-top: 12px; }
-  .codex-dashboard .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20px, 1fr) 44px; gap: 8px; align-items: center; }
-  .codex-dashboard .recent-row { display: grid; grid-template-columns: 1fr 62px; gap: 8px; align-items: baseline; }
+  .codex-dashboard .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20px, 1fr) auto; gap: 8px; align-items: center; }
+  .codex-dashboard .recent-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: baseline; }
   .codex-dashboard .thin-meter { height: 9px; border: 1px solid #000; background: #fff; }
-  .codex-dashboard .row-value { text-align: right; font-size: 14px; font-weight: 700; }
-  .codex-dashboard .empty { margin-top: 16px; font-size: 16px; }
-  .codex-dashboard .codex-footer { font-size: 11px; line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  /* TRMNL X landscape: use the larger canvas rather than OG-sized text. */
-  @media (min-width: 1000px) {
-    .codex-dashboard .quota-label, .codex-dashboard .panel-title { font-size: 28px; }
-    .codex-dashboard .quota-value { font-size: 64px; margin-top: 12px; }
-    .codex-dashboard .quota-meta, .codex-dashboard .muted { font-size: 21px; margin-top: 8px; }
-    .codex-dashboard .meter { height: 16px; margin-top: 12px; }
-    .codex-dashboard .day-label, .codex-dashboard .row-value { font-size: 20px; }
-    .codex-dashboard .row-label { font-size: 23px; }
-    .codex-dashboard .codex-footer { font-size: 16px; }
-  }
-  /* X portrait: quotas across the top, data panels below. */
-  @media (min-height: 900px) and (max-width: 900px) {
-    .codex-dashboard .codex-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 29%) minmax(0, 1fr); }
-    .codex-dashboard .quota-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
-    .codex-dashboard .quota-label, .codex-dashboard .panel-title { font-size: 23px; }
-    .codex-dashboard .quota-value { font-size: 44px; margin-top: 10px; }
-    .codex-dashboard .quota-meta, .codex-dashboard .muted { font-size: 18px; margin-top: 7px; }
-    .codex-dashboard .day-label, .codex-dashboard .row-value { font-size: 18px; }
-    .codex-dashboard .row-label { font-size: 20px; }
-    .codex-dashboard .codex-footer { font-size: 16px; }
-  }
+  .codex-dashboard .row-value { text-align: right; }
+  .codex-dashboard .empty { margin-top: 16px; }
+  .codex-dashboard .codex-footer { line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* TRMNL X portrait uses a 1404px-wide canvas, not a narrow viewport. */
+  .screen--portrait .codex-dashboard .codex-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 29%) minmax(0, 1fr); }
+  .screen--portrait .codex-dashboard .quota-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
 </style>
 <div class="codex-dashboard">
       <div class="codex-grid">
         <div class="quota-stack">
           {% for quota in quotas limit:3 %}
             <div class="quota-box">
-              <div class="quota-label">{{ quota.label | escape }}</div>
-              <div class="quota-value">{{ quota.used_pct }}%</div>
-              <div class="quota-meta">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+              <div class="quota-label title title--small lg:title--large">{{ quota.label | escape }}</div>
+              <div class="quota-value value value--small lg:value--xlarge">{{ quota.used_pct }}%</div>
+              <div class="quota-meta label lg:label--large">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
               <div class="meter"><div class="meter-fill" style="width: {{ quota.used_pct }}%"></div></div>
-              <div class="muted">Reset {{ quota.reset | escape }}</div>
+              <div class="muted label lg:label--large">Reset {{ quota.reset | escape }}</div>
             </div>
           {% else %}
-            <div class="quota-box"><div class="quota-label">Waiting for data</div><div class="muted">Send your first usage payload.</div></div>
+            <div class="quota-box"><div class="quota-label title title--small lg:title--large">Waiting for data</div><div class="muted label lg:label--large">Send your first usage payload.</div></div>
           {% endfor %}
         </div>
         <div class="main-stack">
           <div class="panel">
-            <div class="panel-title">Daily usage</div>
+            <div class="panel-title title title--small lg:title--large">Daily usage</div>
             <div class="daily-bars">
               {% for day in daily_usage limit:7 %}
-                <div class="day"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label">{{ day.label | escape }}</div></div>
+                <div class="day"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label label lg:label--large">{{ day.label | escape }}</div></div>
               {% endfor %}
             </div>
           </div>
           <div class="bottom-grid">
             <div class="panel">
-              <div class="panel-title">Models</div>
+              <div class="panel-title title title--small lg:title--large">Models</div>
               <div class="rows">
                 {% for model in models limit:4 %}
-                  <div class="row"><div class="row-label">{{ model.name | escape }}</div><div class="thin-meter"><div class="thin-meter-fill" style="width: {{ model.pct }}%"></div></div><div class="row-value">{{ model.value | escape }}</div></div>
-                {% else %}<div class="empty">No model data</div>{% endfor %}
+                  <div class="row"><div class="row-label label lg:label--large">{{ model.name | escape }}</div><div class="thin-meter"><div class="thin-meter-fill" style="width: {{ model.pct }}%"></div></div><div class="row-value label lg:label--large">{{ model.value | escape }}</div></div>
+                {% else %}<div class="empty label lg:label--large">No model data</div>{% endfor %}
               </div>
             </div>
             <div class="panel">
-              <div class="panel-title">Recent activity</div>
+              <div class="panel-title title title--small lg:title--large">Recent activity</div>
               <div class="rows">
                 {% for item in recent limit:4 %}
-                  <div class="recent-row"><div class="row-label">{{ item.label | escape }}</div><div class="row-value">{{ item.value | escape }}</div></div>
-                {% else %}<div class="empty">No activity</div>{% endfor %}
+                  <div class="recent-row"><div class="row-label label lg:label--large">{{ item.label | escape }}</div><div class="row-value label lg:label--large">{{ item.value | escape }}</div></div>
+                {% else %}<div class="empty label lg:label--large">No activity</div>{% endfor %}
               </div>
             </div>
           </div>
         </div>
       </div>
-  <div class="codex-footer">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
+  <div class="codex-footer label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>
