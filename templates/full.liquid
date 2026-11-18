@@ -1,5 +1,5 @@
 <style>
-  .codex-dashboard { font-family: system-ui, sans-serif; width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
+  .codex-dashboard { width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
   .codex-dashboard .codex-grid { display: grid; grid-template-columns: minmax(0, 30%) minmax(0, 1fr); gap: 12px; min-height: 0; flex: 1; }
   .codex-dashboard .quota-stack { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .codex-dashboard .quota-box, .codex-dashboard .panel { min-width: 0; min-height: 0; border: 2px solid #000; border-radius: 6px; padding: 10px; background: #fff; overflow: hidden; }
@@ -21,6 +21,27 @@
   .codex-dashboard .row-value { text-align: right; font-size: 14px; font-weight: 700; }
   .codex-dashboard .empty { margin-top: 16px; font-size: 16px; }
   .codex-dashboard .codex-footer { font-size: 11px; line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* TRMNL X landscape: use the larger canvas rather than OG-sized text. */
+  @media (min-width: 1000px) {
+    .codex-dashboard .quota-label, .codex-dashboard .panel-title { font-size: 28px; }
+    .codex-dashboard .quota-value { font-size: 64px; margin-top: 12px; }
+    .codex-dashboard .quota-meta, .codex-dashboard .muted { font-size: 21px; margin-top: 8px; }
+    .codex-dashboard .meter { height: 16px; margin-top: 12px; }
+    .codex-dashboard .day-label, .codex-dashboard .row-value { font-size: 20px; }
+    .codex-dashboard .row-label { font-size: 23px; }
+    .codex-dashboard .codex-footer { font-size: 16px; }
+  }
+  /* X portrait: quotas across the top, data panels below. */
+  @media (min-height: 900px) and (max-width: 900px) {
+    .codex-dashboard .codex-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 29%) minmax(0, 1fr); }
+    .codex-dashboard .quota-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
+    .codex-dashboard .quota-label, .codex-dashboard .panel-title { font-size: 23px; }
+    .codex-dashboard .quota-value { font-size: 44px; margin-top: 10px; }
+    .codex-dashboard .quota-meta, .codex-dashboard .muted { font-size: 18px; margin-top: 7px; }
+    .codex-dashboard .day-label, .codex-dashboard .row-value { font-size: 18px; }
+    .codex-dashboard .row-label { font-size: 20px; }
+    .codex-dashboard .codex-footer { font-size: 16px; }
+  }
 </style>
 <div class="codex-dashboard">
       <div class="codex-grid">
