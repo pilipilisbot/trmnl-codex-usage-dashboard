@@ -1,0 +1,12 @@
+{
+  "instances": {
+    "work": {
+      "webhook_url": "https://trmnl.com/api/custom_plugins/REPLACE_WITH_WORK_UUID",
+      "payload_file": "local/work.json"
+    },
+    "personal": {
+      "webhook_url": "https://trmnl.com/api/custom_plugins/REPLACE_WITH_PERSONAL_UUID",
+      "payload_file": "local/personal.json"
+    }
+  }
+}

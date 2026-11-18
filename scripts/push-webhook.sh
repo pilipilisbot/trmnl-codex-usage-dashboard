@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ -f ".env" ]; then
+# Compatibility helper for a single installation. Prefer publish.py for multiple accounts.
+if [ -f .env ]; then
   set -a
   # shellcheck disable=SC1091
   . ./.env
@@ -9,21 +10,15 @@ if [ -f ".env" ]; then
 fi
 
 payload_path="${1:-${TRMNL_CODEX_PAYLOAD:-payloads/sample-webhook.json}}"
-
-if [ -z "${TRMNL_CODEX_WEBHOOK_URL:-}" ]; then
-  echo "TRMNL_CODEX_WEBHOOK_URL is required. Copy .env.example to .env and set your plugin webhook URL." >&2
+webhook_url="${TRMNL_CODEX_WEBHOOK_URL:-}"
+if [ -z "$webhook_url" ]; then
+  echo 'TRMNL_CODEX_WEBHOOK_URL is required' >&2
   exit 2
 fi
 
-if [ ! -f "$payload_path" ]; then
-  echo "Payload file not found: $payload_path" >&2
-  exit 2
-fi
-
-python3 -m json.tool "$payload_path" >/dev/null
-
-curl "$TRMNL_CODEX_WEBHOOK_URL" \
-  -H "Content-Type: application/json" \
-  --data @"$payload_path"
-
-echo
+python3 - "$payload_path" "$webhook_url" <<'PY'
+import sys
+from pathlib import Path
+from publish import publish
+publish("default", {"payload_file": str(Path(sys.argv[1]).resolve()), "webhook_url": sys.argv[2]}, False)
+PY

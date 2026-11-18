@@ -1,0 +1,13 @@
+- keyname: display_name
+  field_type: string
+  name: Account label
+  description: Distinguish this installation from your other Codex accounts.
+  placeholder: Work account
+  maxlength: 32
+  optional: true
+- keyname: about
+  field_type: author_bio
+  name: About this recipe
+  category: analytics,programming
+  description: Display Codex usage supplied by your own exporter. Each installation has its own webhook URL and data. No OpenAI credentials are shared with this recipe's author.
+  github_url: https://github.com/pilipilisbot/trmnl-codex-usage-dashboard

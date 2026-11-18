@@ -1,74 +1,49 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "TRMNL Codex Usage Dashboard Webhook Payload",
+  "title": "TRMNL Codex usage webhook payload v2",
   "type": "object",
   "required": ["merge_variables"],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "properties": {
     "merge_variables": {
       "type": "object",
-      "required": [
-        "updated_at",
-        "five_hour_used_pct",
-        "five_hour_used",
-        "five_hour_limit",
-        "five_hour_reset",
-        "weekly_used_pct",
-        "weekly_used",
-        "weekly_limit",
-        "weekly_reset",
-        "spark_used_pct",
-        "spark_used",
-        "spark_limit",
-        "spark_reset",
-        "daily_usage",
-        "models",
-        "recent"
-      ],
-      "additionalProperties": true,
+      "required": ["updated_at", "quotas", "daily_usage", "models", "recent"],
+      "additionalProperties": false,
       "properties": {
-        "updated_at": { "type": "string" },
-        "five_hour_used_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "five_hour_used": { "type": "string" },
-        "five_hour_limit": { "type": "string" },
-        "five_hour_reset": { "type": "string" },
-        "weekly_used_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "weekly_used": { "type": "string" },
-        "weekly_limit": { "type": "string" },
-        "weekly_reset": { "type": "string" },
-        "spark_used_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "spark_used": { "type": "string" },
-        "spark_limit": { "type": "string" },
-        "spark_reset": { "type": "string" },
-        "daily_usage": {
-          "type": "array",
-          "maxItems": 7,
-          "items": { "$ref": "#/$defs/percentage_item" }
-        },
-        "models": {
-          "type": "array",
-          "maxItems": 4,
+        "account_label": { "type": "string", "maxLength": 32 },
+        "updated_at": { "type": "string", "maxLength": 32 },
+        "quotas": {
+          "type": "array", "maxItems": 3,
           "items": {
-            "type": "object",
-            "required": ["name", "pct", "value"],
-            "additionalProperties": true,
+            "type": "object", "required": ["label", "used_pct", "used", "limit", "reset"], "additionalProperties": false,
             "properties": {
-              "name": { "type": "string" },
-              "pct": { "type": "integer", "minimum": 0, "maximum": 100 },
-              "value": { "type": "string" }
+              "label": { "type": "string", "maxLength": 32 },
+              "used_pct": { "$ref": "#/$defs/pct" },
+              "used": { "type": "string", "maxLength": 20 },
+              "limit": { "type": "string", "maxLength": 20 },
+              "reset": { "type": "string", "maxLength": 32 }
+            }
+          }
+        },
+        "daily_usage": { "type": "array", "maxItems": 7, "items": { "$ref": "#/$defs/percentage_item" } },
+        "models": {
+          "type": "array", "maxItems": 4,
+          "items": {
+            "type": "object", "required": ["name", "pct", "value"], "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "maxLength": 24 },
+              "pct": { "$ref": "#/$defs/pct" },
+              "value": { "type": "string", "maxLength": 12 }
             }
           }
         },
         "recent": {
-          "type": "array",
-          "maxItems": 4,
+          "type": "array", "maxItems": 4,
           "items": {
-            "type": "object",
-            "required": ["label", "value"],
-            "additionalProperties": true,
+            "type": "object", "required": ["label", "value"], "additionalProperties": false,
             "properties": {
-              "label": { "type": "string" },
-              "value": { "type": "string" }
+              "label": { "type": "string", "maxLength": 24 },
+              "value": { "type": "string", "maxLength": 12 }
             }
           }
         }
@@ -76,13 +51,12 @@
     }
   },
   "$defs": {
+    "pct": { "type": "integer", "minimum": 0, "maximum": 100 },
     "percentage_item": {
-      "type": "object",
-      "required": ["label", "pct"],
-      "additionalProperties": true,
+      "type": "object", "required": ["label", "pct"], "additionalProperties": false,
       "properties": {
-        "label": { "type": "string" },
-        "pct": { "type": "integer", "minimum": 0, "maximum": 100 }
+        "label": { "type": "string", "maxLength": 12 },
+        "pct": { "$ref": "#/$defs/pct" }
       }
     }
   }

@@ -1,69 +1,28 @@
-# Publishing Options
+# Marketplace path and release gate
 
-There are three practical ways to ship this dashboard on TRMNL.
+## Decision
 
-## 1. Private Plugin
+Publish as a **Recipe**, not a Third Party plugin. TRMNL describes Recipes as approved Private Plugins: public in its Recipes marketplace, with Liquid templates, custom form fields and independent installations, without the author hosting user data or a TRMNL OAuth server. This project has no general-purpose OpenAI account-linking service, so pretending to offer automatic collection would mislead installers. Each user must supply data via their own exporter/webhook.
 
-Best for personal use, demos, and early validation.
+Official references (checked 18 November 2026):
 
-- User creates a TRMNL Private Plugin.
-- User pastes `templates/full.liquid`.
-- A local job or hosted job sends `merge_variables` to the plugin webhook.
+- [TRMNL plugin types](https://help.trmnl.com/en/articles/10546870-compare-custom-plugin-types)
+- [Recipe creation, review and publication](https://help.trmnl.com/en/articles/10122094-plugin-recipes)
+- [Private plugin webhook limits](https://docs.trmnl.com/go/private-plugins/webhooks)
+- [Custom form fields](https://help.trmnl.com/en/articles/10513740-custom-plugin-form-builder)
 
-Pros:
+A Third Party plugin would require a hosted installation, management, markup and uninstall service plus token storage and privacy controls. It is unnecessary for this self-hosted exporter model.
 
-- Fastest path.
-- No public review.
-- No hosted app required if the user pushes data from their own machine.
+## Submission checklist
 
-Cons:
+1. Create a clean **Webhook** Private Plugin in the TRMNL account; paste `templates/full.liquid` and `templates/form_fields.yml`.
+2. Use only synthetic data from `payloads/sample-webhook.json` on the Recipe Master instance. TRMNL uses its latest screenshot as the public preview.
+3. Verify the Full layout on the intended device sizes/orientations and confirm empty-data rendering. Do not claim half/quad support until those templates exist.
+4. Verify two separate installations with different account labels, webhook URLs and payloads; confirm one account's data never appears in the other.
+5. In the publication dialog, run **Ask trmy** and resolve its findings. Then select **Publish plugin?** and submit for public review. TRMNL manually approves Recipes; submission is not publication.
 
-- Manual setup per user.
-- Not discoverable in the marketplace.
+Do not submit before steps 1–4 have been proven on TRMNL. The public listing description should say: “Display Codex usage from your own exporter; requires a webhook sender.” Mention the setup guide and that the author receives no credentials.
 
-## 2. Recipe
+## Current status
 
-Best for a public, reusable plugin when no third-party auth or external per-user server flow is required.
-
-TRMNL Recipes live inside TRMNL and are the preferred public path for simple plugins that can be expressed as template plus configuration.
-
-Pros:
-
-- More publishable than a Private Plugin.
-- No OAuth or user data custody.
-- Better fit if the data source can be simple and user-provided.
-
-Cons:
-
-- Less control than a full hosted integration.
-- May not fit if Codex usage data requires a custom authenticated exporter.
-
-## 3. Third Party Plugin
-
-Best for a polished marketplace integration with hosted install/manage flows.
-
-TRMNL public plugin clients require:
-
-- Installation URL.
-- Installation success webhook URL.
-- Plugin management URL.
-- Plugin markup URL.
-- Uninstallation webhook URL.
-- Icon, name, and description.
-
-Pros:
-
-- Proper marketplace-style integration.
-- Can handle account linking, hosted data collection, and richer management.
-
-Cons:
-
-- Requires a hosted service.
-- Requires privacy/security work.
-- More review and maintenance.
-
-## Recommendation For This Project
-
-Start with Private Plugin because it validates the screen and payload contract quickly.
-
-For public release, target Recipe if users can provide the payload via webhook or a simple polling endpoint. Move to Third Party Plugin only if the dashboard needs hosted Codex account linking, user management, or automatic collection that cannot be done cleanly by a user-owned script.
+Repository code and docs are prepared, but this is **not yet a live Recipe**. A signed-in TRMNL session, rendered preview, multi-install test and moderation submission are still required. Do not claim marketplace publication until TRMNL lists it publicly.
