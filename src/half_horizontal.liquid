@@ -17,24 +17,24 @@
 <div class="codex-half-horizontal">
     <div class="quota-row">
       {% for quota in quotas limit:3 %}
-        <div class="quota-card p-2 rounded-md">
+        <div class="quota-card p--10 rounded--small">
           <div class="quota-name title title--small lg:title--large">{{ quota.label | escape }}</div>
           <div class="percent value lg:value--xlarge lg:portrait:value--xxlarge">{{ quota.used_pct }}%</div>
-          <div class="detail mt-1 label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
-          <div class="meter mt-2"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
-          <div class="detail mt-1 label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
+          <div class="detail mt--4 label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+          <div class="meter mt--8"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
+          <div class="detail mt--4 label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
         </div>
       {% else %}
-        <div class="quota-card p-2 rounded-md"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail mt-1 label lg:label--large lg:portrait:label--xlarge">Send your first payload.</div></div>
+        <div class="quota-card p--10 rounded--small"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail mt--4 label lg:label--large lg:portrait:label--xlarge">Send your first payload.</div></div>
       {% endfor %}
     </div>
-    <div class="daily-panel p-2 rounded-md mt-2 hidden lg:portrait:flex">
+    <div class="daily-panel p--10 rounded--small mt--8 hidden lg:portrait:flex">
       <div class="title title--small lg:title--large">Daily usage</div>
-      <div class="daily-bars mt-2">
+      <div class="daily-bars mt--8">
         {% for day in daily_usage limit:7 %}
-          <div class="day justify-end"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label mt-1 text-center label lg:label--large">{{ day.label | escape }}</div></div>
+          <div class="day flex--end"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label mt--4 text--center label lg:label--large">{{ day.label | escape }}</div></div>
         {% endfor %}
       </div>
     </div>
-  <div class="codex-footer pt-1 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
+  <div class="codex-footer pt--4 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>

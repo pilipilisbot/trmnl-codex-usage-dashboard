@@ -26,45 +26,45 @@
       <div class="codex-grid">
         <div class="quota-stack">
           {% for quota in quotas limit:3 %}
-            <div class="quota-box p-2 rounded-md">
+            <div class="quota-box p--10 rounded--small">
               <div class="quota-label title title--small lg:title--large">{{ quota.label | escape }}</div>
-              <div class="quota-value mt-1 value value--small lg:value--xlarge lg:portrait:value--xxlarge">{{ quota.used_pct }}%</div>
-              <div class="quota-meta mt-1 label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
-              <div class="meter mt-1"><div class="meter-fill" style="width: {{ quota.used_pct }}%"></div></div>
-              <div class="muted mt-1 label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
+              <div class="quota-value mt--4 value value--small lg:value--xlarge lg:portrait:value--xxlarge">{{ quota.used_pct }}%</div>
+              <div class="quota-meta mt--4 label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+              <div class="meter mt--4"><div class="meter-fill" style="width: {{ quota.used_pct }}%"></div></div>
+              <div class="muted mt--4 label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
             </div>
           {% else %}
-            <div class="quota-box p-2 rounded-md"><div class="quota-label title title--small lg:title--large">Waiting for data</div><div class="muted mt-1 label lg:label--large lg:portrait:label--xlarge">Send your first usage payload.</div></div>
+            <div class="quota-box p--10 rounded--small"><div class="quota-label title title--small lg:title--large">Waiting for data</div><div class="muted mt--4 label lg:label--large lg:portrait:label--xlarge">Send your first usage payload.</div></div>
           {% endfor %}
         </div>
         <div class="main-stack">
-          <div class="panel p-2 rounded-md">
+          <div class="panel p--10 rounded--small">
             <div class="panel-title title title--small lg:title--large">Daily usage</div>
-            <div class="daily-bars mt-2">
+            <div class="daily-bars mt--8">
               {% for day in daily_usage limit:7 %}
-                <div class="day justify-end"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label mt-1 text-center label lg:label--large">{{ day.label | escape }}</div></div>
+                <div class="day flex--end"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label mt--4 text--center label lg:label--large">{{ day.label | escape }}</div></div>
               {% endfor %}
             </div>
           </div>
           <div class="bottom-grid">
-            <div class="panel p-2 rounded-md">
+            <div class="panel p--10 rounded--small">
               <div class="panel-title title title--small lg:title--large">Models</div>
-              <div class="rows mt-3">
+              <div class="rows mt--12">
                 {% for model in models limit:4 %}
-                  <div class="row"><div class="row-label label lg:label--large">{{ model.name | escape }}</div><div class="thin-meter"><div class="thin-meter-fill" style="width: {{ model.pct }}%"></div></div><div class="row-value text-right label lg:label--large">{{ model.value | escape }}</div></div>
-                {% else %}<div class="empty mt-4 label lg:label--large">No model data</div>{% endfor %}
+                  <div class="row"><div class="row-label label lg:label--large">{{ model.name | escape }}</div><div class="thin-meter"><div class="thin-meter-fill" style="width: {{ model.pct }}%"></div></div><div class="row-value text--right label lg:label--large">{{ model.value | escape }}</div></div>
+                {% else %}<div class="empty mt--16 label lg:label--large">No model data</div>{% endfor %}
               </div>
             </div>
-            <div class="panel p-2 rounded-md">
+            <div class="panel p--10 rounded--small">
               <div class="panel-title title title--small lg:title--large">Recent activity</div>
-              <div class="rows mt-3">
+              <div class="rows mt--12">
                 {% for item in recent limit:4 %}
-                  <div class="recent-row"><div class="row-label label lg:label--large">{{ item.label | escape }}</div><div class="row-value text-right label lg:label--large">{{ item.value | escape }}</div></div>
-                {% else %}<div class="empty mt-4 label lg:label--large">No activity</div>{% endfor %}
+                  <div class="recent-row"><div class="row-label label lg:label--large">{{ item.label | escape }}</div><div class="row-value text--right label lg:label--large">{{ item.value | escape }}</div></div>
+                {% else %}<div class="empty mt--16 label lg:label--large">No activity</div>{% endfor %}
               </div>
             </div>
           </div>
         </div>
       </div>
-  <div class="codex-footer pt-1 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
+  <div class="codex-footer pt--4 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>
