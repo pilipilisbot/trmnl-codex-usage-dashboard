@@ -9,6 +9,10 @@ TRMNL Recipes are reviewed public versions of Private Plugins. This project uses
 - The collector has local contract tests for quota parsing, payload validation, destination isolation, no-send on missing quotas, and dry-run behavior. **A live collector run in this agent environment is not verified** because the Codex CLI is unavailable here; the owner's working device is the real-data check.
 - The repository is public. TRMNL Sync is restricted to this repository; the synced `src/settings.yml` uses the webhook strategy and contains no credentials. TRMNL saves automatically to GitHub; GitHub changes require a manual import into TRMNL.
 
+## Current blocker: TRMNL X featured image
+
+The saved **TRMNL X marketplace preview is blank** (observed 19 November 2026). The OG featured image shows the synthetic demo payload. The clean trmy review covers rendered layouts, not these saved listing images. Regenerate the X featured image only after confirming the Recipe Master currently contains **synthetic data**; inspect both resulting images for personal account names and real usage before submitting. Keep `share_webhook_data` set to `no` so installers receive only their own webhook data. Do not submit while the X image is blank.
+
 ## Before submission
 
 1. Confirm the public repository's README, installation, troubleshooting, and issue-reporting links work. Check the latest `main` commit and that the Recipe's live layouts match it. Do not accidentally import a stale GitHub snapshot over the tested TRMNL version.
@@ -18,4 +22,4 @@ TRMNL Recipes are reviewed public versions of Private Plugins. This project uses
 5. Submit the Recipe for TRMNL's human review using the publication control. **Submission is not approval or a public listing.** Record the review result and verify the listing from an unrelated account after approval.
 6. After the public installation flow exists, test two real installations with distinct labels, webhook URLs, and Codex homes. Confirm no data crosses between them. This cannot be fully verified while the Recipe is private.
 
-Current status: **ready for final submission review, not yet public**. Do not tell users to install it from the marketplace until the public listing is visible. Keep the Recipe Master on synthetic demo data; never send personal usage to it.
+Current status: **blocked by the blank TRMNL X marketplace image; not yet submitted or public**. Do not tell users to install it from the marketplace until the public listing is visible. Keep the Recipe Master on synthetic demo data; never send personal usage to it.
