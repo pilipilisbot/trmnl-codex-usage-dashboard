@@ -12,16 +12,16 @@
 <div class="codex-quadrant">
     <div class="quota-stack">
       {% for quota in quotas limit:2 %}
-      <div class="quota-card p-3 rounded-md{% unless forloop.first %} hidden lg:portrait:visible{% endunless %}">
+      <div class="quota-card p--3 rounded--small{% unless forloop.first %} hidden lg:portrait:visible{% endunless %}">
         <div class="quota-name title title--small lg:title--large">{{ quota.label | escape }}</div>
         <div class="percent value lg:value--xlarge">{{ quota.used_pct }}%</div>
-        <div class="detail mt-1 label lg:label--large">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
-        <div class="meter mt-2"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
-        <div class="detail mt-1 label lg:label--large">Reset {{ quota.reset | escape }}</div>
+        <div class="detail mt--1 label lg:label--large">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+        <div class="meter mt--2"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
+        <div class="detail mt--1 label lg:label--large">Reset {{ quota.reset | escape }}</div>
       </div>
       {% else %}
-        <div class="quota-card p-3 rounded-md"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail mt-1 label lg:label--large">Send your first payload.</div></div>
+        <div class="quota-card p--3 rounded--small"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail mt--1 label lg:label--large">Send your first payload.</div></div>
       {% endfor %}
     </div>
-  <div class="codex-footer pt-1 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }}</div>
+  <div class="codex-footer pt--1 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }}</div>
 </div>

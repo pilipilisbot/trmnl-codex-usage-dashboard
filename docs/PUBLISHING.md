@@ -13,7 +13,7 @@ TRMNL Recipes are reviewed public versions of Private Plugins. This project uses
 
 Both saved featured images were regenerated from a synthetic payload and a temporary `Codex demo` display label. The OG and TRMNL X images are nonblank and visually inspected: no personal account label, real quota, webhook URL, or credential appears. The original private feed and display label were restored and verified against a local backup. The backup was not committed.
 
-TRMNL Chef then blocked submission because the four layouts contained more than six counted CSS declarations (`padding`, `margin`, `border-radius`, `text-align`, or `justify-content`). The layouts now use native Framework utility classes instead; TRMNL Sync saved the updated `src/` files to `main` in commit `9a02552`. A fresh trmy layout review was requested at 13:16 UTC and is pending. Do not submit until the new review confirms the changed layouts remain sound.
+TRMNL Chef then blocked submission because the four layouts contained more than six counted CSS declarations (`padding`, `margin`, `border-radius`, `text-align`, or `justify-content`). The layouts now use native Framework utility classes instead; TRMNL Sync saved the final `src/` files to `main` in commit `69b33c5`. Actual Framework spacing and flex classes were checked in the live renderer, and both featured images were regenerated again from synthetic data after the final layout change. A fresh trmy layout review was requested at 13:16 UTC and is pending. Do not submit until the new review confirms the changed layouts remain sound.
 
 ## Before submission
 
