@@ -19,6 +19,6 @@ fi
 python3 - "$payload_path" "$webhook_url" <<'PY'
 import sys
 from pathlib import Path
-from publish import publish
+from scripts.publish import publish
 publish("default", {"payload_file": str(Path(sys.argv[1]).resolve()), "webhook_url": sys.argv[2]}, False)
 PY

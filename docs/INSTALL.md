@@ -1,43 +1,53 @@
-# Install and run
+# Install the local collector
 
-## 1. TRMNL installation
+Use this guide on a Mac or Linux machine that stays online for scheduled updates. It needs Python 3, the official [Codex CLI](https://github.com/openai/codex), an authenticated Codex account with available rate-limit data, and network access to TRMNL. No Python packages need installing.
 
-The Recipe is not public yet. The owner can test the existing [private plugin](https://trmnl.com/plugin_settings/544833/edit); other testers should create a TRMNL Private Plugin with the **Webhook** strategy. Paste `templates/full.liquid` into Full markup and `templates/form_fields.yml` into Form Fields, then save. Copy the generated webhook URL for *that installation*. The URL acts like a credential: do not commit or share it.
+## 1. Create a TRMNL installation
 
-When the Recipe becomes available, install it once for each account. Every installation generates a different webhook URL. You do **not** need to put an OpenAI token or password in TRMNL.
+When the Recipe is public, find **Codex Usage Dashboard** in TRMNL Recipes and install it. Optionally set **Account label**. Save the installation, then copy its **Webhook URL** from the installation's settings. Each installation has a different URL; treat it as a password.
 
-## 2. Local collector
+Until publication, the owner can test the [private plugin](https://trmnl.com/plugin_settings/544833/edit). Other testers can create a TRMNL Private Plugin with the **Webhook** strategy and copy all four Liquid layouts from `templates/` plus `templates/form_fields.yml` into the matching editor fields. Do not use the owner's private webhook.
 
-Run on a Mac/Linux machine where the official Codex CLI is installed and logged in. The same machine must keep running for scheduled refreshes.
+## 2. Configure the collector
+
+Install and log in to Codex CLI on the **same user account** that will run the collector. Confirm `codex --version` works and complete `codex login` if necessary. Then:
 
 ```bash
-codex --version
+git clone https://github.com/pilipilisbot/trmnl-codex-usage-dashboard.git
+cd trmnl-codex-usage-dashboard
 mkdir -p local
 cp payloads/collector.example.json local/collector.json
 chmod 600 local/collector.json
-$EDITOR local/collector.json
+${EDITOR:-vi} local/collector.json
+```
+
+Replace `REPLACE_WITH_YOUR_INSTANCE_UUID` in `webhook_url` with **your own full TRMNL webhook URL**. Keep the `https://trmnl.com/api/custom_plugins/...` form. `codex_home` is the Codex login to read (default `~/.codex`), `codex_bin` is the CLI executable (default `codex`), and `account_label` is display text. Set `codex_bin` to an absolute path if the scheduler cannot find it.
+
+```bash
 python3 scripts/collect.py --instance work --dry-run
 python3 scripts/collect.py --instance work
 ```
 
-Set `webhook_url` to the TRMNL installation URL. `codex_home` defaults to `~/.codex` and is the login whose quotas and sessions are read. `codex_bin` defaults to `codex`; set an absolute path if your scheduler has a minimal PATH. `account_label` is display text. The dry run contacts the Codex app-server for real quotas but does **not** send data to TRMNL. It prints only row counts, not credentials, webhook URLs or private session data.
+The dry run reads real Codex quotas and local sessions but **does not post** to TRMNL. It prints row counts only. The second command sends the first payload. Check the installation's preview or regenerate its screen in TRMNL to confirm display. The webhook URL must stay in the git-ignored `local/collector.json`; never commit, post, or paste it into an issue.
 
-For a second account, sign in with a separate Codex home and add another config entry:
+## 3. Refresh automatically
+
+Run the collector every 15 minutes. On macOS or Linux, one option is `crontab -e` with **absolute paths** to Python, this checkout, the config file, and the Codex executable in the config. For example, replace the paths below with those from `command -v python3`, `command -v codex`, and `pwd`:
+
+```cron
+*/15 * * * * /absolute/path/to/python3 /absolute/path/to/trmnl-codex-usage-dashboard/scripts/collect.py --config /absolute/path/to/trmnl-codex-usage-dashboard/local/collector.json --all
+```
+
+The TRMNL webhook allows 12 requests per hour per installation; every 15 minutes uses four. Do not schedule the same instance twice. This repository does not install a service or cron job for you. The machine and Codex login must remain available.
+
+## 4. Monitor another Codex account
+
+Create another TRMNL installation and copy **its** webhook. Sign in to the other Codex account using a separate home:
 
 ```bash
 CODEX_HOME="$HOME/.codex-personal" codex login
-python3 scripts/collect.py --all --dry-run
-python3 scripts/collect.py --all
 ```
 
-Set that entry's `codex_home` to `~/.codex-personal` and its *own* webhook URL. The collector continues other installations if one fails. It sets an identifying User-Agent accepted by the TRMNL webhook (plain Python urllib requests can receive HTTP 403). It rejects non-TRMNL destinations and does not print webhook URLs on errors.
+Add another entry to `local/collector.json` with a distinct key, `codex_home` of `~/.codex-personal`, and its own webhook URL. Then run `python3 scripts/collect.py --all --dry-run` and `python3 scripts/collect.py --all`. A failure in one entry does not prevent attempts for other entries. Each account is collected and sent independently.
 
-## 3. Automatic refresh
-
-Schedule `python3 /absolute/path/to/scripts/collect.py --config /absolute/path/to/local/collector.json --all` every 15 minutes using your system's scheduler (for example, `crontab -e` on Linux/macOS). Use absolute paths to both Python and the Codex binary. The standard TRMNL webhook permits 12 requests/hour per installation; 15 minutes is comfortably below this. Do not run multiple schedulers for the same instance. No service is installed or enabled automatically by this repository.
-
-The collector requires network access to Codex's normal authenticated usage read and to the TRMNL webhook. It reads `~/.codex/sessions` locally, but sends only aggregate token counts, model names and quota figures—never prompts, replies, project paths, session IDs or credentials. The `local/` directory is git-ignored. Keep `local/collector.json` mode 600.
-
-If Codex CLI is missing, auth has expired or no quota window is returned, the run fails and sends nothing; it does not substitute invented usage. For API-key logins, Codex's ChatGPT rate-limit read may be unavailable. Empty local session activity is valid and only affects the activity panels.
-
-For manual/demo JSON delivery, see `scripts/publish.py` and [payload contract](PAYLOAD.md).
+The collector sends quota figures, display labels, model names, and aggregate token counts. It never sends prompts, responses, project paths, session IDs, or Codex credentials. See [troubleshooting](TROUBLESHOOTING.md) if a run fails.
