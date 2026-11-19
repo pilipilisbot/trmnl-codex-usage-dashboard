@@ -5,13 +5,15 @@ TRMNL Recipes are reviewed public versions of Private Plugins. This project uses
 ## Verified on 19 November 2026
 
 - The private Recipe (`544833`) renders Full, Half Horizontal, Half Vertical, and Quadrant. TRMNL's trmy review checked OG, X landscape, X portrait, and 1-bit and returned **“All checks passed, no notes.”**
-- The owner tested real data on their device and confirmed it works. The Recipe Master uses synthetic demo data for its preview and remains private.
+- The owner tested real data on their device and confirmed it works. The saved OG and TRMNL X marketplace images use only synthetic demo data. The Recipe Master's personal feed and display label were restored after image generation; webhook data sharing remains disabled.
 - The collector has local contract tests for quota parsing, payload validation, destination isolation, no-send on missing quotas, and dry-run behavior. **A live collector run in this agent environment is not verified** because the Codex CLI is unavailable here; the owner's working device is the real-data check.
 - The repository is public. TRMNL Sync is restricted to this repository; the synced `src/settings.yml` uses the webhook strategy and contains no credentials. TRMNL saves automatically to GitHub; GitHub changes require a manual import into TRMNL.
 
-## Current blocker: TRMNL X featured image
+## Marketplace preflight on 19 November 2026
 
-The saved **TRMNL X marketplace preview is blank** (observed 19 November 2026). The OG featured image shows the synthetic demo payload. The clean trmy review covers rendered layouts, not these saved listing images. Regenerate the X featured image only after confirming the Recipe Master currently contains **synthetic data**; inspect both resulting images for personal account names and real usage before submitting. Keep `share_webhook_data` set to `no` so installers receive only their own webhook data. Do not submit while the X image is blank.
+Both saved featured images were regenerated from a synthetic payload and a temporary `Codex demo` display label. The OG and TRMNL X images are nonblank and visually inspected: no personal account label, real quota, webhook URL, or credential appears. The original private feed and display label were restored and verified against a local backup. The backup was not committed.
+
+TRMNL Chef then blocked submission because the four layouts contained more than six counted CSS declarations (`padding`, `margin`, `border-radius`, `text-align`, or `justify-content`). The layouts now use native Framework utility classes instead; TRMNL Sync saved the updated `src/` files to `main` in commit `9a02552`. A fresh trmy layout review was requested at 13:16 UTC and is pending. Do not submit until the new review confirms the changed layouts remain sound.
 
 ## Before submission
 
@@ -22,4 +24,4 @@ The saved **TRMNL X marketplace preview is blank** (observed 19 November 2026). 
 5. Submit the Recipe for TRMNL's human review using the publication control. **Submission is not approval or a public listing.** Record the review result and verify the listing from an unrelated account after approval.
 6. After the public installation flow exists, test two real installations with distinct labels, webhook URLs, and Codex homes. Confirm no data crosses between them. This cannot be fully verified while the Recipe is private.
 
-Current status: **blocked by the blank TRMNL X marketplace image; not yet submitted or public**. Do not tell users to install it from the marketplace until the public listing is visible. Keep the Recipe Master on synthetic demo data; never send personal usage to it.
+Current status: **previews fixed; updated layout review pending; not yet submitted or public**. Do not tell users to install it from the marketplace until the public listing is visible. Never include personal usage in saved marketplace images.
