@@ -1,229 +1,73 @@
-<link rel="stylesheet" href="https://trmnl.com/css/latest/plugins.css">
-<script src="https://trmnl.com/js/latest/plugins.js"></script>
-
 <style>
-  .codex-dashboard {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-
-  .codex-grid {
-    display: grid;
-    grid-template-columns: 256px 1fr;
-    gap: 18px;
-    height: 406px;
-  }
-
-  .quota-stack {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .quota-box,
-  .panel {
-    border: 2px solid #000;
-    border-radius: 6px;
-    padding: 12px;
-    background: #fff;
-  }
-
-  .quota-label,
-  .panel-title,
-  .row-label,
-  .bar-label {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.05;
-  }
-
-  .quota-value {
-    margin-top: 8px;
-    font-size: 34px;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .quota-meta,
-  .muted {
-    margin-top: 6px;
-    font-size: 14px;
-    color: #333;
-  }
-
-  .meter {
-    margin-top: 10px;
-    height: 12px;
-    border: 2px solid #000;
-    background: repeating-linear-gradient(
-      45deg,
-      #fff,
-      #fff 3px,
-      #ddd 3px,
-      #ddd 6px
-    );
-  }
-
-  .meter-fill {
-    height: 100%;
-    background: #000;
-  }
-
-  .main-stack {
-    display: grid;
-    grid-template-rows: 194px 1fr;
-    gap: 14px;
-  }
-
-  .daily-bars {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    align-items: end;
-    gap: 10px;
-    height: 128px;
-    margin-top: 12px;
-    border-bottom: 2px solid #000;
-  }
-
-  .day {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 128px;
-  }
-
-  .day-bar {
-    min-height: 6px;
-    border: 2px solid #000;
-    background: #000;
-  }
-
-  .day-label {
-    margin-top: 5px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-  }
-
-  .bottom-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-
-  .rows {
-    display: grid;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .row {
-    display: grid;
-    grid-template-columns: 104px 1fr 54px;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .recent-row {
-    display: grid;
-    grid-template-columns: 1fr 62px;
-    gap: 8px;
-    align-items: baseline;
-  }
-
-  .thin-meter {
-    height: 9px;
-    border: 1px solid #000;
-    background: #fff;
-  }
-
-  .thin-meter-fill {
-    height: 100%;
-    background: #000;
-  }
-
-  .row-value {
-    text-align: right;
-    font-size: 14px;
-    font-weight: 700;
-  }
+  .codex-dashboard { width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
+  .codex-dashboard .codex-grid { display: grid; grid-template-columns: minmax(0, 30%) minmax(0, 1fr); gap: 12px; min-height: 0; flex: 1; }
+  .codex-dashboard .quota-stack { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .codex-dashboard .quota-box, .codex-dashboard .panel { min-width: 0; min-height: 0; border: 2px solid #000; border-radius: 6px; padding: 10px; background: #fff; overflow: hidden; }
+  .codex-dashboard .quota-label, .codex-dashboard .panel-title, .codex-dashboard .row-label { line-height: 1.05; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .codex-dashboard .quota-value { margin-top: 4px; line-height: 1; }
+  .codex-dashboard .quota-meta, .codex-dashboard .muted { margin-top: 3px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .codex-dashboard .meter { margin-top: 5px; height: 9px; border: 2px solid #000; background: repeating-linear-gradient(45deg, #fff, #fff 3px, #ddd 3px, #ddd 6px); }
+  .codex-dashboard .meter-fill, .codex-dashboard .thin-meter-fill { height: 100%; background: #000; }
+  .codex-dashboard .main-stack { display: grid; grid-template-rows: minmax(0, 48%) minmax(0, 1fr); gap: 10px; min-height: 0; }
+  .codex-dashboard .daily-bars { display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 10px; height: 70%; margin-top: 8px; border-bottom: 2px solid #000; }
+  .codex-dashboard .day { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+  .codex-dashboard .day-bar { min-height: 6px; border: 2px solid #000; background: #000; }
+  .codex-dashboard .day-label { margin-top: 5px; text-align: center; }
+  .codex-dashboard .bottom-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; min-height: 0; }
+  .codex-dashboard .rows { display: grid; gap: 8px; margin-top: 12px; }
+  .codex-dashboard .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20px, 1fr) auto; gap: 8px; align-items: center; }
+  .codex-dashboard .recent-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: baseline; }
+  .codex-dashboard .thin-meter { height: 9px; border: 1px solid #000; background: #fff; }
+  .codex-dashboard .row-value { text-align: right; }
+  .codex-dashboard .empty { margin-top: 16px; }
+  .codex-dashboard .codex-footer { line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* TRMNL X portrait uses a 1404px-wide canvas, not a narrow viewport. */
+  .screen--portrait .codex-dashboard .codex-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 29%) minmax(0, 1fr); }
+  .screen--portrait .codex-dashboard .quota-stack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
 </style>
-
-<div class="screen codex-dashboard">
-  <div class="view view--full">
-    <div class="layout layout--col">
+<div class="codex-dashboard">
       <div class="codex-grid">
         <div class="quota-stack">
-          <div class="quota-box">
-            <div class="quota-label">5h quota</div>
-            <div class="quota-value">{{ five_hour_used_pct }}%</div>
-            <div class="quota-meta">{{ five_hour_used }} / {{ five_hour_limit }}</div>
-            <div class="meter"><div class="meter-fill" style="width: {{ five_hour_used_pct }}%"></div></div>
-            <div class="muted">Reset {{ five_hour_reset }}</div>
-          </div>
-
-          <div class="quota-box">
-            <div class="quota-label">Weekly quota</div>
-            <div class="quota-value">{{ weekly_used_pct }}%</div>
-            <div class="quota-meta">{{ weekly_used }} / {{ weekly_limit }}</div>
-            <div class="meter"><div class="meter-fill" style="width: {{ weekly_used_pct }}%"></div></div>
-            <div class="muted">Reset {{ weekly_reset }}</div>
-          </div>
-
-          <div class="quota-box">
-            <div class="quota-label">Spark</div>
-            <div class="quota-value">{{ spark_used_pct }}%</div>
-            <div class="quota-meta">{{ spark_used }} / {{ spark_limit }}</div>
-            <div class="meter"><div class="meter-fill" style="width: {{ spark_used_pct }}%"></div></div>
-            <div class="muted">Reset {{ spark_reset }}</div>
-          </div>
+          {% for quota in quotas limit:3 %}
+            <div class="quota-box">
+              <div class="quota-label title title--small lg:title--large">{{ quota.label | escape }}</div>
+              <div class="quota-value value value--small lg:value--xlarge lg:portrait:value--xxlarge">{{ quota.used_pct }}%</div>
+              <div class="quota-meta label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+              <div class="meter"><div class="meter-fill" style="width: {{ quota.used_pct }}%"></div></div>
+              <div class="muted label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
+            </div>
+          {% else %}
+            <div class="quota-box"><div class="quota-label title title--small lg:title--large">Waiting for data</div><div class="muted label lg:label--large lg:portrait:label--xlarge">Send your first usage payload.</div></div>
+          {% endfor %}
         </div>
-
         <div class="main-stack">
           <div class="panel">
-            <div class="panel-title">Daily usage</div>
+            <div class="panel-title title title--small lg:title--large">Daily usage</div>
             <div class="daily-bars">
-              {% for day in daily_usage %}
-                <div class="day">
-                  <div class="day-bar" style="height: {{ day.pct }}%"></div>
-                  <div class="day-label">{{ day.label }}</div>
-                </div>
+              {% for day in daily_usage limit:7 %}
+                <div class="day"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label label lg:label--large">{{ day.label | escape }}</div></div>
               {% endfor %}
             </div>
           </div>
-
           <div class="bottom-grid">
             <div class="panel">
-              <div class="panel-title">Models</div>
+              <div class="panel-title title title--small lg:title--large">Models</div>
               <div class="rows">
-                {% for model in models %}
-                  <div class="row">
-                    <div class="row-label">{{ model.name }}</div>
-                    <div class="thin-meter"><div class="thin-meter-fill" style="width: {{ model.pct }}%"></div></div>
-                    <div class="row-value">{{ model.value }}</div>
-                  </div>
-                {% endfor %}
+                {% for model in models limit:4 %}
+                  <div class="row"><div class="row-label label lg:label--large">{{ model.name | escape }}</div><div class="thin-meter"><div class="thin-meter-fill" style="width: {{ model.pct }}%"></div></div><div class="row-value label lg:label--large">{{ model.value | escape }}</div></div>
+                {% else %}<div class="empty label lg:label--large">No model data</div>{% endfor %}
               </div>
             </div>
-
             <div class="panel">
-              <div class="panel-title">Recent work</div>
+              <div class="panel-title title title--small lg:title--large">Recent activity</div>
               <div class="rows">
-                {% for item in recent %}
-                  <div class="recent-row">
-                    <div class="row-label">{{ item.label }}</div>
-                    <div class="row-value">{{ item.value }}</div>
-                  </div>
-                {% endfor %}
+                {% for item in recent limit:4 %}
+                  <div class="recent-row"><div class="row-label label lg:label--large">{{ item.label | escape }}</div><div class="row-value label lg:label--large">{{ item.value | escape }}</div></div>
+                {% else %}<div class="empty label lg:label--large">No activity</div>{% endfor %}
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="title_bar">
-      <span class="title">Analitica de Codex</span>
-      <span class="instance">Updated {{ updated_at }}</span>
-    </div>
-  </div>
+  <div class="codex-footer label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>

@@ -1,49 +1,43 @@
-# Install
+# Install and run
 
-## 1. Clone
+## 1. TRMNL installation
 
-```bash
-git clone https://github.com/pilipilisbot/trmnl-codex-usage-dashboard.git
-cd trmnl-codex-usage-dashboard
-```
+The Recipe is not public yet. The owner can test the existing [private plugin](https://trmnl.com/plugin_settings/544833/edit); other testers should create a TRMNL Private Plugin with the **Webhook** strategy. Paste `templates/full.liquid` into Full markup and `templates/form_fields.yml` into Form Fields, then save. Copy the generated webhook URL for *that installation*. The URL acts like a credential: do not commit or share it.
 
-## 2. Create the TRMNL Private Plugin
+When the Recipe becomes available, install it once for each account. Every installation generates a different webhook URL. You do **not** need to put an OpenAI token or password in TRMNL.
 
-1. Open TRMNL.
-2. Create a Private Plugin.
-3. Select Webhook as the data strategy.
-4. Paste `templates/full.liquid` into the Full markup editor.
-5. Save the plugin.
-6. Copy the generated webhook URL.
+## 2. Local collector
 
-## 3. Configure the webhook URL
+Run on a Mac/Linux machine where the official Codex CLI is installed and logged in. The same machine must keep running for scheduled refreshes.
 
 ```bash
-cp .env.example .env
-$EDITOR .env
+codex --version
+mkdir -p local
+cp payloads/collector.example.json local/collector.json
+chmod 600 local/collector.json
+$EDITOR local/collector.json
+python3 scripts/collect.py --instance work --dry-run
+python3 scripts/collect.py --instance work
 ```
 
-Set:
+Set `webhook_url` to the TRMNL installation URL. `codex_home` defaults to `~/.codex` and is the login whose quotas and sessions are read. `codex_bin` defaults to `codex`; set an absolute path if your scheduler has a minimal PATH. `account_label` is display text. The dry run contacts the Codex app-server for real quotas but does **not** send data to TRMNL. It prints only row counts, not credentials, webhook URLs or private session data.
+
+For a second account, sign in with a separate Codex home and add another config entry:
 
 ```bash
-TRMNL_CODEX_WEBHOOK_URL=https://trmnl.com/api/custom_plugins/YOUR_PLUGIN_UUID
+CODEX_HOME="$HOME/.codex-personal" codex login
+python3 scripts/collect.py --all --dry-run
+python3 scripts/collect.py --all
 ```
 
-## 4. Test with sample data
+Set that entry's `codex_home` to `~/.codex-personal` and its *own* webhook URL. The collector continues other installations if one fails. It sets an identifying User-Agent accepted by the TRMNL webhook (plain Python urllib requests can receive HTTP 403). It rejects non-TRMNL destinations and does not print webhook URLs on errors.
 
-```bash
-make validate
-make push-sample
-```
+## 3. Automatic refresh
 
-Your TRMNL plugin should now render the sample dashboard.
+Schedule `python3 /absolute/path/to/scripts/collect.py --config /absolute/path/to/local/collector.json --all` every 15 minutes using your system's scheduler (for example, `crontab -e` on Linux/macOS). Use absolute paths to both Python and the Codex binary. The standard TRMNL webhook permits 12 requests/hour per installation; 15 minutes is comfortably below this. Do not run multiple schedulers for the same instance. No service is installed or enabled automatically by this repository.
 
-## 5. Send real data
+The collector requires network access to Codex's normal authenticated usage read and to the TRMNL webhook. It reads `~/.codex/sessions` locally, but sends only aggregate token counts, model names and quota figures—never prompts, replies, project paths, session IDs or credentials. The `local/` directory is git-ignored. Keep `local/collector.json` mode 600.
 
-Generate a payload with the same shape as `payloads/sample-webhook.json`, then push it:
+If Codex CLI is missing, auth has expired or no quota window is returned, the run fails and sends nothing; it does not substitute invented usage. For API-key logins, Codex's ChatGPT rate-limit read may be unavailable. Empty local session activity is valid and only affects the activity panels.
 
-```bash
-./scripts/push-webhook.sh path/to/your-payload.json
-```
-
-For scheduled updates, call the script from cron, systemd timer, GitHub Actions, or any local job that can produce the payload JSON.
+For manual/demo JSON delivery, see `scripts/publish.py` and [payload contract](PAYLOAD.md).
