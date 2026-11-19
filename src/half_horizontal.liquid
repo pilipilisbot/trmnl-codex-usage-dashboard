@@ -1,41 +1,40 @@
 <style>
   .codex-half-horizontal { width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
   .codex-half-horizontal .quota-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; min-height: 0; flex: 1; }
-  .codex-half-horizontal .quota-card { border: 2px solid #000; border-radius: 6px; padding: 10px; overflow: hidden; }
+  .codex-half-horizontal .quota-card { border: 2px solid #000; overflow: hidden; }
   .codex-half-horizontal .quota-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .codex-half-horizontal .percent { line-height: 1.1; }
-  .codex-half-horizontal .detail { margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .codex-half-horizontal .meter { height: 12px; border: 2px solid #000; margin-top: 8px; }
+  .codex-half-horizontal .detail { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .codex-half-horizontal .meter { height: 12px; border: 2px solid #000; }
   .codex-half-horizontal .fill { height: 100%; background: #000; }
-  .codex-half-horizontal .daily-panel { flex: 1; min-height: 0; flex-direction: column; border: 2px solid #000; border-radius: 6px; padding: 10px; overflow: hidden; margin-top: 10px; }
-  .codex-half-horizontal .daily-bars { display: flex; flex: 1; min-height: 0; align-items: end; gap: 10px; margin-top: 8px; border-bottom: 2px solid #000; }
-  .codex-half-horizontal .day { display: flex; flex: 1; min-width: 0; height: 100%; flex-direction: column; justify-content: flex-end; }
+  .codex-half-horizontal .daily-panel { flex: 1; min-height: 0; flex-direction: column; border: 2px solid #000; overflow: hidden; }
+  .codex-half-horizontal .daily-bars { display: flex; flex: 1; min-height: 0; align-items: end; gap: 10px; border-bottom: 2px solid #000; }
+  .codex-half-horizontal .day { display: flex; flex: 1; min-width: 0; height: 100%; flex-direction: column; }
   .codex-half-horizontal .day-bar { min-height: 6px; border: 2px solid #000; background: #000; }
-  .codex-half-horizontal .day-label { margin-top: 5px; text-align: center; }
   .screen--portrait .codex-half-horizontal .quota-row { flex: none; }
-  .codex-half-horizontal .codex-footer { line-height: 1.2; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .codex-half-horizontal .codex-footer { line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
 <div class="codex-half-horizontal">
     <div class="quota-row">
       {% for quota in quotas limit:3 %}
-        <div class="quota-card">
+        <div class="quota-card p-2 rounded-md">
           <div class="quota-name title title--small lg:title--large">{{ quota.label | escape }}</div>
           <div class="percent value lg:value--xlarge lg:portrait:value--xxlarge">{{ quota.used_pct }}%</div>
-          <div class="detail label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
-          <div class="meter"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
-          <div class="detail label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
+          <div class="detail mt-1 label lg:label--large lg:portrait:label--xlarge">{{ quota.used | escape }} / {{ quota.limit | escape }}</div>
+          <div class="meter mt-2"><div class="fill" style="width: {{ quota.used_pct }}%"></div></div>
+          <div class="detail mt-1 label lg:label--large lg:portrait:label--xlarge">Reset {{ quota.reset | escape }}</div>
         </div>
       {% else %}
-        <div class="quota-card"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail label lg:label--large lg:portrait:label--xlarge">Send your first payload.</div></div>
+        <div class="quota-card p-2 rounded-md"><div class="quota-name title title--small lg:title--large">Waiting for data</div><div class="detail mt-1 label lg:label--large lg:portrait:label--xlarge">Send your first payload.</div></div>
       {% endfor %}
     </div>
-    <div class="daily-panel hidden lg:portrait:flex">
+    <div class="daily-panel p-2 rounded-md mt-2 hidden lg:portrait:flex">
       <div class="title title--small lg:title--large">Daily usage</div>
-      <div class="daily-bars">
+      <div class="daily-bars mt-2">
         {% for day in daily_usage limit:7 %}
-          <div class="day"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label label lg:label--large">{{ day.label | escape }}</div></div>
+          <div class="day justify-end"><div class="day-bar" style="height: {{ day.pct }}%"></div><div class="day-label mt-1 text-center label lg:label--large">{{ day.label | escape }}</div></div>
         {% endfor %}
       </div>
     </div>
-  <div class="codex-footer label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
+  <div class="codex-footer pt-1 label label--small lg:label--base">{{ trmnl.plugin_settings.custom_fields_values.display_name | default: account_label | default: "Codex usage" | escape }} · Updated {{ updated_at | default: "—" | escape }}</div>
 </div>
