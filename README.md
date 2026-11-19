@@ -1,35 +1,18 @@
-# Codex Usage for TRMNL
+# Codex Usage Dashboard for TRMNL
 
-A TRMNL Recipe and a **working local Codex collector**. Each installation has its own webhook URL and can point at a different `CODEX_HOME` (Codex login). No OpenAI credential goes to TRMNL.
+A TRMNL Recipe with a self-hosted collector for Codex usage. The collector reads quota windows from the official `codex app-server` API and optional aggregate token activity from local Codex session logs. It sends the resulting display data to **your own** TRMNL installation webhook. No OpenAI login or API key is entered in TRMNL or sent to the recipe author.
 
-## What it shows
+Quota percentages and reset times come from Codex. Daily bars and model mix are **relative local token activity**, not billing or remaining quota. If the Codex account does not expose rate-limit windows, the collector fails without sending a fabricated value.
 
-Real Codex quota percentages and reset times from the official `codex app-server` `account/rateLimits/read` API. The local `~/.codex/sessions` logs supply seven days of relative token activity and model mix when available. The recent-activity panel shows token counts by day: project names and prompts are never sent to TRMNL. The local bars are relative activity, **not** quota or billing figures.
+## Install
 
-## Get started
+The Recipe is currently **private**. Once its public TRMNL listing is approved, install **Codex Usage Dashboard** from TRMNL Recipes, copy the installation's webhook URL, and follow the [local collector installation guide](docs/INSTALL.md). You can install the Recipe once per Codex account; use a separate webhook and `CODEX_HOME` for each.
 
-1. Install and sign in to the [Codex CLI](https://github.com/openai/codex) on the machine that will run the collector. Confirm `codex --version` works.
-2. Create or install a TRMNL Recipe instance and copy its *webhook URL*.
-3. Copy the example config, set its webhook URL, and run the collector:
+The source and a private-plugin testing path are available now. See [installation](docs/INSTALL.md), [troubleshooting](docs/TROUBLESHOOTING.md), and [how to report an issue](CONTRIBUTING.md).
 
-```bash
-mkdir -p local
-cp payloads/collector.example.json local/collector.json
-$EDITOR local/collector.json
-python3 scripts/collect.py --instance work --dry-run
-python3 scripts/collect.py --instance work
-```
+## Development and release
 
-See [installation and scheduling](docs/INSTALL.md). Run it every 15 minutes for automatic updates. To monitor another account, add an instance with its own webhook and separate `codex_home`; sign that home in with Codex CLI. One account's data never gets mixed with another's.
-
-A **private test plugin** is active in the owner's TRMNL account; the Recipe is **not published in the marketplace**. The sample payload is synthetic. The original manual JSON sender remains available as `scripts/publish.py` for testing or custom exporters.
-
-## Development
-
-```bash
-make validate
-python3 -m unittest discover -s tests
-```
+`src/` is the TRMNL-synced Recipe; `templates/` is the maintained plain-text copy of its Liquid layouts and form fields. Run `make validate` and `python3 -m unittest discover -s tests` before changes. The [payload contract](docs/PAYLOAD.md) describes custom senders; [publication checklist](docs/PUBLISHING.md) tracks the marketplace release. The sample payload is synthetic.
 
 ## License
 
